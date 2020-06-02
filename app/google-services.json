@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "590440298250",
+    "firebase_url": "https://kknkt-c5762.firebaseio.com",
+    "project_id": "kknkt-c5762",
+    "storage_bucket": "kknkt-c5762.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590440298250:android:7305433378b6449875ecf3",
+        "android_client_info": {
+          "package_name": "com.example.kknkt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590440298250-sbmr59nt2f6hc51fjcls78s6qhhbvo3a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYJYfpeg40bgozSH5IDenOVE-wHkTX8J8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590440298250-sbmr59nt2f6hc51fjcls78s6qhhbvo3a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

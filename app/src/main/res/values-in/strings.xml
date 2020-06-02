@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">AbsenS</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="person_name">Nama</string>
+    <string name="free_date">Tanggal Bebas</string>
+    <string name="address">Alamat</string>
+    <string name="name">Nama</string>
+    <string name="arrival_date">Tanggal datang</string>
+    <string name="nik_number">Nomor Induk Kependudukan</string>
+    <string name="birthday_birthplace">Tempat Tanggal Lahir</string>
+    <string name="gender">Jenis Kelamin</string>
+    <string name="rt">RT</string>
+    <string name="rw">RW</string>
+    <string name="village">Kelurahan</string>
+    <string name="sub_district">Kecamatan</string>
+    <string name="religion">Agama</string>
+    <string name="job">Pekerjaan</string>
+    <string name="citizenship">Kewarganegaraan</string>
+    <string name="submit">Simpan</string>
+    <string name="reminder_time">Waktu Pengingat</string>
+    <string name="settings">Pengaturan</string>
+    <string name="rt_name">Nama RT</string>
+    <string name="save">Simpan</string>
+    <string name="daily_reminder">Pengingat Harian</string>
+    <string name="free"> Bebas"</string>
+    <string name="time_for_daily_reminder">Waktunya untuk pengingat Harian</string>
+    <string name="no_one_free_today">Tidak Ada yang bebas hari ini</string>
+    <string name="quarantined">Terkarantina</string>
+    <string name="free_today">Bebas Hari Ini</string>
+    <string name="person">Orang</string>
+    <string name="about">About</string>
+    <string name="camera">Camera</string>
+    <string name="photo">Photo</string>
+    <string name="about_app">Tentang Aplikasi</string>
+    <string name="content1">Aplikasi ini digunakan untuk melakukan pendataan oleh RT setempat terhadap Masyarakat yang baru kembali dari luar kota. Pendataan dilakukan dengan menentukan waktu karantina yang diberikan kepada Masyarakat tersebut. Hal ini penting, untuk memutus rantai penyebaran COVID-19</string>
+    <string name="about_develop">Tentang Pengembang</string>
+    <string name="jurusan">Teknik Informatika</string>
+    <string name="fakultas">Fakultas Teknik</string>
+    <string name="universitas">Universitas Mulawarman</string>
+    <string name="ig">\@naufanlalala</string>
+    <string name="export_data">Ekspor data</string>
+    <string name="success_export">Ekspor Sukses</string>
+    <string name="file_name">Nama File</string>
+    <string name="cancel">Batal</string>
+    <string name="ok">OK</string>
+    <string name="number_of_quarantine_day">Jumlah Hari Karantina</string>
+    <string name="male">Laki Laki</string>
+    <string name="female">Perempuan</string>
+    <string name="please_wait">Please Wait ....</string>
+    <string name="event_date">event date</string>
+    <string name="event_name">event name</string>
+    <string name="event">Event</string>
+    <string name="find">find</string>
+    <string name="find_by_name">Find By Name</string>
+    <string name="absen">Absen</string>
+    <string name="absent">absent</string>
+    <string name="temperature">Temperature</string>
+    <string-array name="genders_array">
+        <item>Laki-Laki</item>
+        <item>Perempuan</item>
+    </string-array>
+</resources>

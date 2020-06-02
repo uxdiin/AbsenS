@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/personFragment">
+
+    <fragment
+        android:id="@+id/personAddUpdateFragment"
+        android:name="com.example.kknkt.ui.person.PersonAddUpdateFragment"
+        android:label="fragment_person_add_update"
+        tools:layout="@layout/fragment_person_add_update">
+        <argument
+            android:name="person"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.kknkt.models.Person"/>
+        <argument
+            android:name="Update"
+            android:defaultValue="null"
+            app:argType="string"/>
+        <action
+            android:id="@+id/action_personAddUpdateFragment_to_personFragment"
+            app:destination="@id/personFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"/>
+        <action
+            android:id="@+id/action_personAddUpdateFragment_to_settingsActivity"
+            app:destination="@id/settingsActivity" />
+        <action
+            android:id="@+id/action_personAddUpdateFragment_to_aboutActivity"
+            app:destination="@id/aboutActivity" />
+        <action
+            android:id="@+id/action_personAddUpdateFragment_to_cameraActivity"
+            app:destination="@id/cameraActivity" />
+        <action
+            android:id="@+id/action_personAddUpdateFragment_to_absenFragment"
+            app:destination="@id/absenFragment" />
+        <action
+            android:id="@+id/action_personAddUpdateFragment_to_personQRFragment"
+            app:destination="@id/personQRFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/personFragment"
+        android:name="com.example.kknkt.ui.person.PersonFragment"
+        android:label="fragment_person"
+        tools:layout="@layout/fragment_person" >
+        <action
+            android:id="@+id/action_personFragment_to_personAddUpdateFragment"
+            app:destination="@id/personAddUpdateFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_open_exit"/>
+        <action
+            android:id="@+id/action_personFragment_to_freePersonFragment"
+            app:destination="@id/freePersonFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
+        <action
+            android:id="@+id/action_personFragment_to_settingsActivity"
+            app:destination="@id/settingsActivity" />
+        <action
+            android:id="@+id/action_personFragment_to_aboutActivity"
+            app:destination="@id/aboutActivity" />
+        <action
+            android:id="@+id/action_personFragment_to_absenFragment"
+            app:destination="@id/absenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/freePersonFragment"
+        android:name="com.example.kknkt.ui.person.FreePersonFragment"
+        android:label="person_free_fragment"
+        tools:layout="@layout/person_free_fragment" >
+        <action
+            android:id="@+id/action_freePersonFragment_to_personFragment"
+            app:destination="@id/personFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_freePersonFragment_to_settingsActivity"
+            app:destination="@id/settingsActivity" />
+        <action
+            android:id="@+id/action_freePersonFragment_to_showPersonActivity2"
+            app:destination="@id/showPersonActivity2" />
+        <action
+            android:id="@+id/action_freePersonFragment_to_aboutActivity"
+            app:destination="@id/aboutActivity" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/bottomNavigationDrawerFragment"
+        android:name="com.example.kknkt.ui.dashboard.BottomNavigationDrawerFragment"
+        android:label="BottomNavigationDrawerFragment" >
+        <action
+            android:id="@+id/action_bottomNavigationDrawerFragment_to_settingsActivity"
+            app:destination="@id/settingsActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.example.kknkt.ui.settings.SettingsActivity"
+        android:label="activity_settings"
+        tools:layout="@layout/activity_settings" />
+    <activity
+        android:id="@+id/showPersonActivity2"
+        android:name="com.example.kknkt.ui.person.ShowPersonActivity"
+        android:label="fragment_show_person"
+        tools:layout="@layout/fragment_show_person" />
+    <activity
+        android:id="@+id/aboutActivity"
+        android:name="com.example.kknkt.ui.about.AboutActivity"
+        android:label="activity_about"
+        tools:layout="@layout/activity_about" />
+    <activity
+        android:id="@+id/cameraActivity"
+        android:name="com.example.kknkt.camera.CameraActivity"
+        android:label="activity_camera"
+        tools:layout="@layout/activity_camera" />
+    <fragment
+        android:id="@+id/absenFragment"
+        android:name="com.example.kknkt.ui.person.AbsenFragment"
+        android:label="fragment_absen"
+        tools:layout="@layout/fragment_absen" >
+        <action
+            android:id="@+id/action_absenFragment_to_personAddUpdateFragment"
+            app:destination="@id/personAddUpdateFragment" />
+        <action
+            android:id="@+id/action_absenFragment_to_personFragment"
+            app:destination="@id/personFragment" />
+        <action
+            android:id="@+id/action_absenFragment_to_addAbsenFragemnt"
+            app:destination="@id/addAbsenFragemnt" />
+        <action
+            android:id="@+id/action_absenFragment_to_absenningFragment"
+            app:destination="@id/absenningFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAbsenFragemnt"
+        android:name="com.example.kknkt.ui.person.AddAbsenFragemnt"
+        android:label="fragment_add_absen_fragemnt"
+        tools:layout="@layout/fragment_add_absen_fragemnt" >
+        <action
+            android:id="@+id/action_addAbsenFragemnt_to_absenFragment"
+            app:destination="@id/absenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/absenningFragment"
+        android:name="com.example.kknkt.ui.person.AbsenningFragment"
+        android:label="fragment_absenning"
+        tools:layout="@layout/fragment_absenning" >
+        <argument
+            android:name="absen"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.kknkt.models.Absen"/>
+        <action
+            android:id="@+id/action_absenningFragment_to_personAbsenFragment"
+            app:destination="@id/personAbsenFragment" />
+        <action
+            android:id="@+id/action_absenningFragment_to_QRScannerActivity"
+            app:destination="@id/QRScannerActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/personAbsenFragment"
+        android:name="com.example.kknkt.ui.person.PersonAbsenFragment"
+        android:label="fragment_person_absen"
+        tools:layout="@layout/fragment_person_absen" >
+        <argument
+            android:name="absen"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.kknkt.models.Absen"/>
+        <action
+            android:id="@+id/action_personAbsenFragment_to_absenningFragment"
+            app:destination="@id/absenningFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/personQRFragment"
+        android:name="com.example.kknkt.ui.person.PersonQRFragment"
+        android:label="fragment_person_q_r"
+        tools:layout="@layout/fragment_person_q_r">
+        <argument
+            android:name="person"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.kknkt.models.Person"/>
+    </fragment>
+    <activity
+        android:id="@+id/QRScannerActivity"
+        android:name="com.example.kknkt.ui.person.QRScannerActivity"
+        android:label="activity_q_r_scanner"
+        tools:layout="@layout/activity_q_r_scanner" >
+        <argument
+            android:name="absen"
+            android:defaultValue="@null"
+            app:nullable="true"
+            app:argType="com.example.kknkt.models.Absen"/>
+    </activity>
+</navigation>
