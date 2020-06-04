@@ -15,8 +15,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.example.kknkt.R
+import com.example.kknkt.db.RTDatabase
 import com.example.kknkt.models.Person
+import com.example.kknkt.models.PersonAbsenData
+import com.example.kknkt.models.personAsbenDataExport
+import com.example.kknkt.repository.RTRepository
 import com.opencsv.CSVWriter
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
@@ -26,6 +33,9 @@ class ExportSQLiteToCSV(context: Context,persons: List<Person>,fileName: String)
     private var mContext: Context = context
     private val personToExport = persons
     private var m_Text = fileName
+    private var personAbsenDataList = ArrayList<personAsbenDataExport>()
+
+    private lateinit var rtRepository: RTRepository
     val TAG = "EXPORT"
 
     private val dialog = ProgressDialog(mContext)
@@ -35,6 +45,16 @@ class ExportSQLiteToCSV(context: Context,persons: List<Person>,fileName: String)
     }
     override fun doInBackground(vararg params: String?): String {
         val exportDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+        rtRepository = RTRepository(RTDatabase(mContext))
+
+         GlobalScope.launch {
+             rtRepository.getPersonAbsenDataNotLive(object : RTRepository.GetPersonAbsenDataNotliveCallBack {
+                 override fun onSucces(personAbsenDataExport: List<personAsbenDataExport>) {
+                    personAbsenDataList.addAll(personAbsenDataExport)
+                 }
+             })
+         }
+
         if (!exportDir.exists()) {
             exportDir.mkdirs()
         }
@@ -79,6 +99,18 @@ class ExportSQLiteToCSV(context: Context,persons: List<Person>,fileName: String)
                     person.citizenship.toString(),
                     person.arrivalDate.toString(),
                     person.freeDate.toString()
+                )
+                csvWrite.writeNext(arrStr)
+            }
+
+            val absenTableTitle = arrayOf("NIK", "Nama", "Nama event", "Temperature")
+            csvWrite.writeNext(absenTableTitle)
+            for(personAbsenData in personAbsenDataList){
+                val arrStr = arrayOf(
+                    personAbsenData.nik.toString(),
+                    personAbsenData.name.toString(),
+                    personAbsenData.eventName.toString(),
+                    personAbsenData.temperature.toString()
                 )
                 csvWrite.writeNext(arrStr)
             }

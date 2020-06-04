@@ -51,12 +51,6 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onHidden(fab: FloatingActionButton?) {
                 super.onHidden(fab)
-                Log.d(TAG,bottom_app_bar.fabAlignmentMode.toString())
-
-//                fab?.setImageResource(
-//                    if(bottom_app_bar.fabAlignmentMode == BottomAppBar.FAB_ALIGNMENT_MODE_END) R.drawable.ic_delete_forever_black_24dp
-//                    else R.drawable.ic_add_white_24dp
-//                )
                 fab?.show()
             }
         }

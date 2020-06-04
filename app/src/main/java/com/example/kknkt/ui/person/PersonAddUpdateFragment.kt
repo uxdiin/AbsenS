@@ -3,20 +3,21 @@ package com.example.kknkt.ui.person
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.graphics.Bitmap
+
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.kknkt.R
-import com.example.kknkt.camera.CameraActivity
 import com.example.kknkt.models.Person
 import com.example.kknkt.ui.MainActivity
 import com.example.kknkt.ui.dashboard.BottomNavigationDrawerFragment
@@ -24,9 +25,9 @@ import com.example.kknkt.ui.settings.Settings
 import com.example.kknkt.utils.DateUtils
 import com.example.kknkt.utils.TextRecognition
 import com.example.kknkt.utils.UniqueCodeGenerator
-import com.google.android.material.snackbar.Snackbar
+import com.example.kknkt.camera.*
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import com.jaredrummler.materialspinner.MaterialSpinner
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_person_add_update.*
 import java.util.*
@@ -43,14 +44,24 @@ class PersonAddUpdateFragment : Fragment(R.layout.fragment_person_add_update), T
     companion object{
         public val REQUEST_GET_TEXT_RESULT = 1
         public val REQUEST_GET_IMAGE = 2
+        public val REQUEST_ACTION_CAPTURE = 3
         public val EXTRA_PERSON = "extra_person"
+    }
+    private fun myFragmentPreparation(){
+        (activity as MainActivity).apply {
+            fab.setImageResource(R.drawable.ic_delete_forever_black_24dp)
+            bottom_app_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_END
+            btnBack.setOnClickListener {
+                goBack()
+            }
+        }
+
+
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         personViewModel = (activity as MainActivity).viewModel
-        (activity as MainActivity).btnBack.setOnClickListener {
-            goBack()
-        }
+        myFragmentPreparation()
         prepareDatePicker()
         prepareSpinner()
         var update = args.Update
@@ -98,10 +109,12 @@ class PersonAddUpdateFragment : Fragment(R.layout.fragment_person_add_update), T
 
     }
     private fun goBack(){
-        (activity as MainActivity).fab.hide(
-            (activity as MainActivity).addVisibilityChanged)
-        (activity as MainActivity).tvTitleFragment.setText(getString(R.string.quarantined))
-        (activity as MainActivity).btnBack.visibility = View.GONE
+        (activity as MainActivity).apply {
+            fab.hide(
+                (activity as MainActivity).addVisibilityChanged)
+            tvTitleFragment.setText(getString(R.string.personL_list))
+            btnBack.visibility = View.GONE
+        }
         findNavController().navigate(R.id.action_personAddUpdateFragment_to_personFragment)
     }
     private fun prepareSpinner(){
@@ -140,10 +153,10 @@ class PersonAddUpdateFragment : Fragment(R.layout.fragment_person_add_update), T
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.navigation_free -> {
-                Log.d(TAG,"free")
-                findNavController().navigate(R.id.action_personFragment_to_freePersonFragment)
-            }
+//            R.id.navigation_free -> {
+//                Log.d(TAG,"free")
+//                findNavController().navigate(R.id.action_personFragment_to_freePersonFragment)
+//            }
             android.R.id.home -> {
                 val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
                 bottomNavDrawerFragment.show((activity as MainActivity).supportFragmentManager, bottomNavDrawerFragment.tag)
@@ -151,6 +164,9 @@ class PersonAddUpdateFragment : Fragment(R.layout.fragment_person_add_update), T
             R.id.navigation_camera -> {
                 val intent = Intent(requireContext(), CameraActivity::class.java)
                 startActivityForResult(intent, REQUEST_GET_TEXT_RESULT)
+
+//                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//                startActivityForResult(intent, REQUEST_ACTION_CAPTURE)
             }
             R.id.navigation_photo -> {
                 val intent = Intent()
@@ -160,14 +176,22 @@ class PersonAddUpdateFragment : Fragment(R.layout.fragment_person_add_update), T
                     REQUEST_GET_IMAGE)
             }
             R.id.navigation_QR -> {
-                setToPerson()
-                val bundle = Bundle().apply{
-                    putSerializable("person",person)
+                if(!checkInputEmpty()){
+                    setToPerson()
+                    val bundle = Bundle().apply{
+                        putSerializable("person",person)
+                    }
+                    findNavController().navigate(R.id.action_personAddUpdateFragment_to_personQRFragment,bundle)
+                }else{
+                    Toast.makeText(context,getString(R.string.mandatory_person),Toast.LENGTH_SHORT).show()
                 }
-                findNavController().navigate(R.id.action_personAddUpdateFragment_to_personQRFragment,bundle)
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun checkInputEmpty():Boolean{
+        return edtName.text.toString().trim()!! == "" || edtAddress.text.toString().trim() == "" || edtAddress.text.toString().trim().length < 5
     }
 
     private fun setToEditText(person: Person){
@@ -197,6 +221,9 @@ class PersonAddUpdateFragment : Fragment(R.layout.fragment_person_add_update), T
         }else if(requestCode == REQUEST_GET_IMAGE && resultCode == Activity.RESULT_OK){
             var image = FirebaseVisionImage.fromFilePath(requireContext(), data?.data!!)
             TextRecognition(requireContext(),this).readLocal(image)
+        }else if(requestCode == REQUEST_ACTION_CAPTURE && resultCode == Activity.RESULT_OK){
+            val image = FirebaseVisionImage.fromBitmap(data?.extras!!.get("data") as Bitmap)
+            TextRecognition(requireContext(),this).readLocal(image)
         }
 
     }
@@ -210,4 +237,5 @@ class PersonAddUpdateFragment : Fragment(R.layout.fragment_person_add_update), T
         menu.clear()
         inflater.inflate(R.menu.bottom_nav_menu_add_update,menu)
     }
+
 }

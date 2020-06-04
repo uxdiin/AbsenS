@@ -9,6 +9,7 @@ import java.util.*
 
 class DateUtils() {
     companion object{
+        var sdf = SimpleDateFormat("yyyy-M-d")
 
         val TAG :String = "DateUtils"
         public fun addDate(date: Date, howLong: Int): Date{
@@ -19,16 +20,29 @@ class DateUtils() {
             var addedDate = calendar.time
             return addedDate
         }
+        public fun dateInterval(date1: Date, date2: Date): Int{
+            val calendar = Calendar.getInstance()
+//            calendar.time = date1
+            val diff = date2.time - date1.time
+            val daysDifferent = (diff / (24 * 60 * 60 * 1000)) as Int
+            return  daysDifferent
+        }
+
+        public fun dateCompare(string1: String, string2: String): Int{
+            if(string1 != "" && string2 != ""){
+                var date1 = sdf.parse(string1)
+                var date2 = sdf.parse(string2)
+
+                return date1.compareTo(date2)
+            }else{
+                return 0
+            }
+        }
+
         public fun getTodayDate(): String{
-//            val current = LocalDateTime.now()
-            val sdf = SimpleDateFormat("yyyy-M-dd")
             var currentDate = sdf.format(Date())
-//            currentDate = "'"+currentDate+"'"
             Log.d(TAG,currentDate)
             return currentDate
-//            System.out.println(" C DATE is  "+currentDate)
-//            val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm")
-//            val formattedDate = formatter.format()
         }
     }
 }

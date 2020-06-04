@@ -48,15 +48,21 @@
     <string name="number_of_quarantine_day">Jumlah Hari Karantina</string>
     <string name="male">Laki Laki</string>
     <string name="female">Perempuan</string>
-    <string name="please_wait">Please Wait ....</string>
-    <string name="event_date">event date</string>
-    <string name="event_name">event name</string>
-    <string name="event">Event</string>
-    <string name="find">find</string>
-    <string name="find_by_name">Find By Name</string>
+    <string name="please_wait">Mohon Tunggu ....</string>
+    <string name="event_date">Tanggal Acara</string>
+    <string name="event_name">Nama Acara</string>
+    <string name="event">Acara</string>
+    <string name="find">Cari</string>
+    <string name="find_by_name">Cari berdasarkan nama</string>
     <string name="absen">Absen</string>
     <string name="absent">absent</string>
-    <string name="temperature">Temperature</string>
+    <string name="temperature">Temperatur</string>
+    <string name="personL_list">Daftar Orang</string>
+    <string name="event_list">Daftar Acara</string>
+    <string name="mandatory_person">Nama dan alamat wajib diisi dengan alamat > 5</string>
+    <string name="add_person">Tambah Orang</string>
+    <string name="list_of_person_in_quarantined">Daftar Orang dalam Karantina</string>
+    <string name="list_of_person_freed_today">Daftar Orang Bebas Hari Ini</string>
     <string-array name="genders_array">
         <item>Laki-Laki</item>
         <item>Perempuan</item>

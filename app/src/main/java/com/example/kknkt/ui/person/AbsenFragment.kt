@@ -19,6 +19,7 @@ import com.example.kknkt.models.Absen
 import com.example.kknkt.ui.MainActivity
 import com.example.kknkt.ui.dashboard.BottomNavigationDrawerFragment
 import com.example.kknkt.utils.ExportSQLiteToCSV
+import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_absen.*
 
@@ -27,6 +28,18 @@ class AbsenFragment : Fragment() {
     private val TAG = "ABSENTFRAGMENT"
     private lateinit var viewModel: PersonViewModel
     private lateinit var absenAdapter: AbsenAdapter
+
+
+    fun myFragmentPreparation(){
+        (activity as MainActivity).apply {
+            tvTitleFragment.setText(getString(R.string.event_list))
+            bottom_app_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+            fab.show()
+            fab.hide(addVisibilityChanged)
+            fab.setImageResource(R.drawable.ic_add_black_24dp)
+            btnBack.visibility = View.GONE
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +50,7 @@ class AbsenFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        myFragmentPreparation()
         Log.d(TAG,"person")
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
@@ -50,10 +64,12 @@ class AbsenFragment : Fragment() {
                 putSerializable("absen", it)
                 putString("Update","update")
             }
-
-            (activity as MainActivity).invalidateOptionsMenu()
-            (activity as MainActivity).tvTitleFragment.setText(getString(R.string.absen))
-            (activity as MainActivity).btnBack.visibility = View.VISIBLE
+            (activity as MainActivity).apply {
+                bottom_app_bar.navigationIcon = null
+                invalidateOptionsMenu()
+                tvTitleFragment.setText(getString(R.string.absen))
+                btnBack.visibility = View.VISIBLE
+            }
             findNavController().navigate(
                 R.id.action_absenFragment_to_absenningFragment,
                 bundle
@@ -82,11 +98,19 @@ class AbsenFragment : Fragment() {
         setRetainInstance(true)
     }
 
+    override fun onResume() {
+        super.onResume()
+        myFragmentPreparation()
+    }
     private fun goToAddAbsenFragment(){
-        (activity as MainActivity).btnBack.visibility = View.VISIBLE
-        (activity as MainActivity).fab.hide((activity as MainActivity).addVisibilityChanged)
-        (activity as MainActivity).invalidateOptionsMenu()
-        (activity as MainActivity).tvTitleFragment.setText(getString(R.string.event))
+
+        (activity as MainActivity).apply {
+            bottom_app_bar.navigationIcon = null
+            btnBack.visibility = View.VISIBLE
+            fab.hide((activity as MainActivity).addVisibilityChanged)
+            invalidateOptionsMenu()
+            tvTitleFragment.setText(getString(R.string.event))
+        }
         findNavController().navigate(R.id.action_absenFragment_to_addAbsenFragemnt)
     }
 
@@ -98,29 +122,34 @@ class AbsenFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.navigation_free -> {
-                Log.d(TAG,"free")
-                (activity as MainActivity).tvTitleFragment.setText(getString(R.string.free_today))
-                (activity as MainActivity).fab.hide()
-                findNavController().navigate(R.id.action_personFragment_to_freePersonFragment)
+            R.id.navigation_quarantine -> {
+                (activity as MainActivity).apply {
+                    bottom_app_bar.navigationIcon = null
+                    tvTitleFragment.setText(getString(R.string.quarantined))
+                    fab.hide()
+                }
+                findNavController().navigate(R.id.action_absenFragment_to_quarantineFragment)
             }
-            R.id.navigation_export -> {
-                val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(requireContext())
-                builder.setTitle(getString(R.string.file_name))
-                val input = EditText(requireContext())
-//                input.width = 100
-                var m_Text = ""
-                input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-                builder.setView(input)
-                builder.setPositiveButton(getString(R.string.ok)
-                ) { _, _ ->
-                    m_Text = input.text.toString()
-                    ExportSQLiteToCSV(requireContext(),(activity as MainActivity).personToExport,m_Text).execute()
-                }
-                builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->  dialog.cancel()
-                }
-                builder.show()
-
+//            R.id.navigation_export -> {
+//                val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(requireContext())
+//                builder.setTitle(getString(R.string.file_name))
+//                val input = EditText(requireContext())
+////                input.width = 100
+//                var m_Text = ""
+//                input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+//                builder.setView(input)
+//                builder.setPositiveButton(getString(R.string.ok)
+//                ) { _, _ ->
+//                    m_Text = input.text.toString()
+//                    ExportSQLiteToCSV(requireContext(),(activity as MainActivity).personToExport,m_Text).execute()
+//                }
+//                builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->  dialog.cancel()
+//                }
+//                builder.show()
+//
+//            }
+            R.id.navigation_home -> {
+                findNavController().navigate(R.id.action_absenFragment_to_personFragment)
             }
             android.R.id.home -> {
                 val bottomNavDrawerFragment = BottomNavigationDrawerFragment()

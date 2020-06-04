@@ -27,9 +27,20 @@ class FreePersonFragment : Fragment(R.layout.person_free_fragment) {
     private lateinit var viewModel: PersonViewModel
     private lateinit var personsAdapter: PersonsAdapter
 
+    private fun prepareMyFragment(){
+        (activity as MainActivity).apply {
+            btnBack.visibility = View.VISIBLE
+            btnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
+            tvTitleFragment.setText(getString(R.string.free_today))
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG,"person")
+        prepareMyFragment()
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
 
@@ -68,36 +79,39 @@ class FreePersonFragment : Fragment(R.layout.person_free_fragment) {
         }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when {
-            item.itemId == R.id.navigation_home -> {
+        when(item.itemId) {
+            R.id.navigation_home -> {
                 Log.d(TAG,"home")
-                (activity as MainActivity).tvTitleFragment.setText(requireContext().getString(R.string.quarantined))
                 (activity as MainActivity).fab.show()
                 findNavController().navigate(R.id.action_freePersonFragment_to_personFragment)
             }
-            item.itemId == android.R.id.home -> {
+            R.id.navigation_absen -> {
+                findNavController().navigate(R.id.action_freePersonFragment_to_absenFragment)
+            }
+            android.R.id.home -> {
                 val bottomNavDrawerFragment = BottomNavigationDrawerFragment()
                 bottomNavDrawerFragment.show((activity as MainActivity).supportFragmentManager, bottomNavDrawerFragment.tag)
             }
-            item.itemId == R.id.navigation_export -> {
-                val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(requireContext())
-                builder.setTitle(getString(R.string.file_name))
-                val input = EditText(requireContext())
-//                input.width = 100
-                var m_Text = ""
-                input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-                builder.setView(input)
-                builder.setPositiveButton(getString(R.string.ok)
-                ) { _, _ ->
-                    m_Text = input.text.toString()
-                    ExportSQLiteToCSV(requireContext(),(activity as MainActivity).personToExport,m_Text).execute()
-                }
-                builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->  dialog.cancel()
-                }
-                builder.show()
-
-            }
+//            item.itemId == R.id.navigation_export -> {
+//                val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(requireContext())
+//                builder.setTitle(getString(R.string.file_name))
+//                val input = EditText(requireContext())
+////                input.width = 100
+//                var m_Text = ""
+//                input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+//                builder.setView(input)
+//                builder.setPositiveButton(getString(R.string.ok)
+//                ) { _, _ ->
+//                    m_Text = input.text.toString()
+//                    ExportSQLiteToCSV(requireContext(),(activity as MainActivity).personToExport,m_Text).execute()
+//                }
+//                builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->  dialog.cancel()
+//                }
+//                builder.show()
+//
+//            }
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

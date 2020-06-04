@@ -52,11 +52,6 @@
             app:enterAnim="@anim/fragment_close_enter"
             app:exitAnim="@anim/fragment_open_exit"/>
         <action
-            android:id="@+id/action_personFragment_to_freePersonFragment"
-            app:destination="@id/freePersonFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
-        <action
             android:id="@+id/action_personFragment_to_settingsActivity"
             app:destination="@id/settingsActivity" />
         <action
@@ -64,7 +59,14 @@
             app:destination="@id/aboutActivity" />
         <action
             android:id="@+id/action_personFragment_to_absenFragment"
-            app:destination="@id/absenFragment" />
+            app:destination="@id/absenFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_open_exit"/>
+        <action
+            android:id="@+id/action_personFragment_to_quarantineFragment"
+            app:destination="@id/quarantineFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/freePersonFragment"
@@ -85,6 +87,9 @@
         <action
             android:id="@+id/action_freePersonFragment_to_aboutActivity"
             app:destination="@id/aboutActivity" />
+        <action
+            android:id="@+id/action_freePersonFragment_to_absenFragment"
+            app:destination="@id/absenFragment" />
 
     </fragment>
     <fragment
@@ -125,13 +130,25 @@
             app:destination="@id/personAddUpdateFragment" />
         <action
             android:id="@+id/action_absenFragment_to_personFragment"
-            app:destination="@id/personFragment" />
+            app:destination="@id/personFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_absenFragment_to_addAbsenFragemnt"
             app:destination="@id/addAbsenFragemnt" />
         <action
             android:id="@+id/action_absenFragment_to_absenningFragment"
-            app:destination="@id/absenningFragment" />
+            app:destination="@id/absenningFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_open_exit"/>
+        <action
+            android:id="@+id/action_absenFragment_to_personFragment2"
+            app:destination="@id/personFragment" />
+        <action
+            android:id="@+id/action_absenFragment_to_quarantineFragment"
+            app:destination="@id/quarantineFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/addAbsenFragemnt"
@@ -172,6 +189,9 @@
         <action
             android:id="@+id/action_personAbsenFragment_to_absenningFragment"
             app:destination="@id/absenningFragment" />
+        <action
+            android:id="@+id/action_personAbsenFragment_to_absenFragment"
+            app:destination="@id/absenFragment" />
     </fragment>
     <fragment
         android:id="@+id/personQRFragment"
@@ -195,4 +215,41 @@
             app:nullable="true"
             app:argType="com.example.kknkt.models.Absen"/>
     </activity>
+    <fragment
+        android:id="@+id/quarantineFragment"
+        android:name="com.example.kknkt.ui.person.QuarantineFragment"
+        android:label="fragment_quarantine"
+        tools:layout="@layout/fragment_quarantine" >
+        <action
+            android:id="@+id/action_quarantineFragment_to_personFragment"
+            app:destination="@id/personFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_open_exit"/>
+        <action
+            android:id="@+id/action_quarantineFragment_to_absenFragment"
+            app:destination="@id/absenFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_open_exit"/>
+        <action
+            android:id="@+id/action_quarantineFragment_to_freePersonFragment"
+            app:destination="@id/freePersonFragment" />
+        <action
+            android:id="@+id/action_quarantineFragment_to_inQuarantinedFragment"
+            app:destination="@id/inQuarantinedFragment" />
+        <action
+            android:id="@+id/action_quarantineFragment_to_freePersonFragment2"
+            app:destination="@id/freePersonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inQuarantinedFragment"
+        android:name="com.example.kknkt.ui.person.InQuarantinedFragment"
+        android:label="fragment_in_quarantined"
+        tools:layout="@layout/fragment_in_quarantined" >
+        <action
+            android:id="@+id/action_inQuarantinedFragment_to_absenFragment"
+            app:destination="@id/absenFragment" />
+        <action
+            android:id="@+id/action_inQuarantinedFragment_to_personFragment"
+            app:destination="@id/personFragment" />
+    </fragment>
 </navigation>

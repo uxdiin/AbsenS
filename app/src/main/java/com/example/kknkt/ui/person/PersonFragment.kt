@@ -27,6 +27,7 @@ import com.example.kknkt.ui.dashboard.BottomNavigationDrawerFragment
 import com.example.kknkt.utils.ExportSQLiteToCSV
 import com.google.android.material.bottomappbar.BottomAppBar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_person.*
 import java.io.File
 
@@ -41,14 +42,26 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
         public val REQUEST_GET_TEXT_RESULT = 1
     }
 
+    fun prepareMyFragment(){
+        (activity as MainActivity).apply {
+            bottom_app_bar.fabAlignmentMode = BottomAppBar.FAB_ALIGNMENT_MODE_CENTER
+            tvTitleFragment.setText(getString(R.string.personL_list))
+            bottom_app_bar.setNavigationIcon(R.drawable.ic_menu_black_24dp)
+            fab.show()
+            fab.hide(addVisibilityChanged)
+            fab.setImageResource(R.drawable.ic_add_black_24dp)
+            fab.setOnClickListener {
+                goToAddUpdateFragment()
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        prepareMyFragment()
         Log.d(TAG,"person")
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
-        (activity as MainActivity).fab.setOnClickListener {
-            goToAddUpdateFragment()
-        }
 
 
         personsAdapter.setOnClickListener {
@@ -57,11 +70,13 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
                 putString("Update","update")
             }
 
-            (activity as MainActivity).fab.hide(
-                (activity as MainActivity).addVisibilityChanged)
-            (activity as MainActivity).invalidateOptionsMenu()
-            (activity as MainActivity).tvTitleFragment.setText(getString(R.string.person))
-            (activity as MainActivity).btnBack.visibility = View.VISIBLE
+            (activity as MainActivity).apply {
+                bottom_app_bar.navigationIcon = null
+                fab.hide((activity as MainActivity).addVisibilityChanged)
+                invalidateOptionsMenu()
+                tvTitleFragment.setText(getString(R.string.person))
+                btnBack.visibility = View.VISIBLE
+            }
             findNavController().navigate(
                 R.id.action_personFragment_to_personAddUpdateFragment,
                 bundle
@@ -91,41 +106,28 @@ class PersonFragment : Fragment(R.layout.fragment_person) {
     }
 
     private fun goToAddUpdateFragment(){
-        (activity as MainActivity).btnBack.visibility = View.VISIBLE
-        (activity as MainActivity).fab.hide((activity as MainActivity).addVisibilityChanged)
-        (activity as MainActivity).invalidateOptionsMenu()
-        (activity as MainActivity).tvTitleFragment.setText(getString(R.string.person))
+        (activity as MainActivity).apply {
+            bottom_app_bar.navigationIcon = null
+            btnBack.visibility = View.VISIBLE
+            invalidateOptionsMenu()
+            tvTitleFragment.setText(getString(R.string.person))
+        }
         findNavController().navigate(R.id.action_personFragment_to_personAddUpdateFragment)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.navigation_free -> {
+            R.id.navigation_quarantine -> {
                 Log.d(TAG,"free")
-                (activity as MainActivity).tvTitleFragment.setText(getString(R.string.free_today))
-                (activity as MainActivity).fab.hide()
-                findNavController().navigate(R.id.action_personFragment_to_freePersonFragment)
-            }
-            R.id.navigation_export -> {
-                val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(requireContext())
-                builder.setTitle(getString(R.string.file_name))
-                val input = EditText(requireContext())
-//                input.width = 100
-                var m_Text = ""
-                input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-                builder.setView(input)
-                builder.setPositiveButton(getString(R.string.ok)
-                ) { _, _ ->
-                    m_Text = input.text.toString()
-                    ExportSQLiteToCSV(requireContext(),(activity as MainActivity).personToExport,m_Text).execute()
+                (activity as MainActivity).apply {
+                    tvTitleFragment.setText(getString(R.string.quarantined))
+                    fab.hide()
+                    bottom_app_bar.navigationIcon = null
                 }
-                builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->  dialog.cancel()
-                }
-                builder.show()
-
+                findNavController().navigate(R.id.action_personFragment_to_quarantineFragment)
             }
             R.id.navigation_absen -> {
-
+                (activity as MainActivity).bottom_app_bar.navigationIcon = null
                 findNavController().navigate(R.id.action_personFragment_to_absenFragment)
             }
             android.R.id.home -> {

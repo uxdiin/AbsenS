@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-thin"
-            android:text="@string/quarantined"
+            android:text="@string/personL_list"
             android:textColor="@android:color/black"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,6 +46,7 @@
             app:layout_constraintHorizontal_bias="0.25"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -89,7 +90,7 @@
             android:background="@drawable/shape"
             app:backgroundTint="@color/colorPrimary"
             app:buttonGravity="center_vertical"
-            app:fabAlignmentMode="end"
+            app:fabAlignmentMode="center"
             app:hideOnScroll="true"
             app:layout_scrollFlags="scroll|enterAlways"
             app:menu="@menu/bottom_nav_menu"

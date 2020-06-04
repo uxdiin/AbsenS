@@ -24,7 +24,6 @@
         <item>Female</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="reminder_time">Reminder Time</string>
     <string name="settings">Settings</string>
     <string name="rt_name">Rt Name</string>
@@ -56,8 +55,6 @@
     <string name="female">Female</string>
     <string name="please_wait">Please Wait ....</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="event_date">event date</string>
     <string name="event_name">event name</string>
     <string name="event">Event</string>
@@ -66,4 +63,10 @@
     <string name="absen">Absen</string>
     <string name="absent">absent</string>
     <string name="temperature">Temperature</string>
+    <string name="personL_list">Person List</string>
+    <string name="event_list">Event List</string>
+    <string name="mandatory_person">name and adress are mandatory</string>
+    <string name="add_person">Add Person</string>
+    <string name="list_of_person_in_quarantined">List of Person in Quarantined</string>
+    <string name="list_of_person_freed_today">List of Person Freed Today</string>
 </resources>

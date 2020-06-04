@@ -6,17 +6,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 import com.example.kknkt.R
+import com.example.kknkt.ui.MainActivity
 import com.example.kknkt.utils.QRGenerator
 import com.example.kknkt.utils.UniqueCodeGenerator
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_person_q_r.*
 
 class PersonQRFragment : Fragment() {
 
     private lateinit var person: Person
     private val args: PersonQRFragmentArgs by navArgs()
+
+    fun prepareMyFragment(){
+        (activity as MainActivity).apply {
+            btnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,5 +41,6 @@ class PersonQRFragment : Fragment() {
         person = args.person!!
         var bitmap = QRGenerator.generate(UniqueCodeGenerator.formatToCode(person.name!!,person.address!!)+","+person.name+","+person.address)
         imgQRCode.setImageBitmap(bitmap)
+        prepareMyFragment()
     }
 }
